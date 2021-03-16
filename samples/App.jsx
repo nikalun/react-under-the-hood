@@ -1,5 +1,12 @@
 import OwnReact from "../src";
 
-const App = <h1 prop1="prop value">Hello, World!</h1>;
+import List from "./List";
+import ListItem from "./ListItem";
+
+const App = (
+  <div prop1="sdfsdf">
+    {List(ListItem)}
+  </div>
+);
 
 export default App;
