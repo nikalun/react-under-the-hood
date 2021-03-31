@@ -5,35 +5,36 @@ class OwnReact {
     this.rootInstance = null;
   }
 
-  static createElement(...args) {
-    const object = {
-      type: args[0]
+  static createElement(type, props, ...children) {
+    const currentChildren = children.map(child =>
+      typeof child === "string" ? this.createTextElement(child) : child
+    );
+
+    let element = {
+      type,
+      props: {
+        ...props,
+        children: Array.isArray(currentChildren[0])
+          ? currentChildren[0]
+          : currentChildren
+      }
     };
 
-    const isText = typeof args[2] === "string" || typeof args[2] === "number";
-    let children = [];
-
-    if (isText) {
-      children = [
-        {
-          type: "text",
-          props: {
-            value: args[2]
-          }
-        }
-      ];
-    } else {
-      const isArray = Array.isArray(args[2].props?.children);
-
-      children = isArray ? args[2].props.children[0] : args.slice(2);
+    if (typeof type === "function") {
+      element = type(element.props);
     }
 
-    object.props = {
-      ...object.props,
-      children
-    };
+    return element;
+  }
 
-    return object;
+  static createTextElement(text) {
+    return {
+      type: "text",
+      props: {
+        value: text,
+        children: []
+      }
+    };
   }
 
   static render(element, container) {

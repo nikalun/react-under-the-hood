@@ -1,36 +1,37 @@
+import createPublicInstance from "./createPublicInstance";
+import updateDomProperties from "./updateDomProperties";
+
 const instantiate = element => {
   const { type, props } = element;
 
-  const isTextElement = type === "text";
-  const dom = isTextElement
-    ? document.createTextNode(props.value)
-    : document.createElement(type);
+  const isDomElement = typeof type === "string";
 
-  const isListener = name => name.startsWith("on");
-  const isAttribute = name => !isListener(name) && name !== "children";
+  if (isDomElement) {
+    const isTextElement = type === "text";
+    const dom = isTextElement
+      ? document.createTextNode(props.value)
+      : document.createElement(type);
 
-  Object.keys(props)
-    .filter(isListener)
-    .forEach(name => {
-      const eventType = name.toLowerCase().substring(2);
-      dom.addEventListener(eventType, props[name]);
-    });
+    updateDomProperties(dom, [], props);
 
-  Object.keys(props)
-    .filter(isAttribute)
-    .forEach(name => {
-      dom[name] = props[name];
-    });
+    // Добавляем инстансы потомков
+    const childElements = props.children || [];
 
-  // Добавляем инстансы потомков
-  const childElements = props.children || [];
+    const childInstances = childElements.map(instantiate);
+    const childDoms = childInstances.map(
+      childInstance => childInstance && childInstance.dom
+    );
+    childDoms.forEach(childDom => childDom && dom.appendChild(childDom));
 
-  const childInstances = childElements.map(instantiate);
-  const childDoms = childInstances.map(
-    childInstance => childInstance && childInstance.dom
-  );
-  childDoms.forEach(childDom => childDom && dom.appendChild(childDom));
-  const instance = { dom, element, childInstances };
+    return { dom, element, childInstances };
+  }
+
+  const instance = {};
+  const publicInstance = createPublicInstance(element, instance);
+  const childElement = publicInstance.render();
+  const childInstance = instantiate(childElement);
+  const { dom } = childInstance;
+  Object.assign(instance, { dom, element, childInstance, publicInstance });
   return instance;
 };
 
