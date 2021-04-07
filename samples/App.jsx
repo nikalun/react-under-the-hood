@@ -51,11 +51,7 @@ class App extends Component {
      this.setState({ alphabet: [...alphabet].reverse()})
     }, 5000);
 
-    return (
-      <div prop1="sdfsdf">
-        <List alphabet={this.state.alphabet} />
-      </div>
-    );
+    return <List alphabet={this.state.alphabet} />;
   }
 }
 

@@ -39,7 +39,17 @@ class OwnReact {
 
   static render(element, container) {
     const prevInstance = this.rootInstance;
-    this.rootInstance = reconcile(container, prevInstance, element);
+    // eslint-disable-next-line new-cap
+    const Element = new element();
+    const renderElement = {
+      type: element,
+      props: {
+        ...Element.props,
+        children: []
+      }
+    };
+
+    this.rootInstance = reconcile(container, prevInstance, renderElement);
   }
 }
 
