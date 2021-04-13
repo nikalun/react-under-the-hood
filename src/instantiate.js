@@ -29,6 +29,7 @@ const instantiate = element => {
   const childInstance = instantiate(childElement);
   const dom = childInstance.dom;
   Object.assign(instance, { dom, element, childInstance, publicInstance });
+
   return instance;
 };
 

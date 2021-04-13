@@ -2,9 +2,10 @@
 import reconcile from "./reconcicle";
 
 const reconcileChildren = (instance, element) => {
-  const dom = instance.dom;
-  const childInstances = instance.childInstances;
+  const { dom } = instance;
+  const childInstances = instance.childInstance;
   const nextChildElements = element.props.children || [];
+  
   const newChildInstances = [];
   const count = Math.max(childInstances.length, nextChildElements.length);
   for (let i = 0; i < count; i++) {

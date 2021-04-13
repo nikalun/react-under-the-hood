@@ -48,7 +48,7 @@ class App extends Component {
 
   render() {
     setTimeout(() => {
-     this.setState({ alphabet: [...alphabet].reverse()})
+     this.setState({ alphabet: ['А', 'Б']})
     }, 5000);
 
     return <List alphabet={this.state.alphabet} />;

@@ -16,6 +16,8 @@ const reconcile = (parentDom, instance, element) => {
   } else if (instance.element.type == element.type) {
     // Обновляем инстанс
     updateDomProperties(instance.dom, instance.element.props, element.props);
+    console.log(instance)
+    console.log(element)
     instance.childInstances = reconcileChildren(instance, element);
     instance.element = element;
     return instance;
