@@ -38,7 +38,8 @@ class OwnReact {
   }
 
   static render(element, container) {
-    console.log('render')
+    // eslint-disable-next-line
+    console.log("render");
     const prevInstance = this.rootInstance;
     // eslint-disable-next-line new-cap
     const Element = new element();

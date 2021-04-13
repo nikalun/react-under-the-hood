@@ -48,9 +48,10 @@ class App extends Component {
 
   render() {
     setTimeout(() => {
-     this.setState({ alphabet: ['А', 'Б']})
+      this.setState({ alphabet: ["А", "Б"] });
     }, 5000);
 
+    // eslint-disable-next-line
     return <List alphabet={this.state.alphabet} />;
   }
 }

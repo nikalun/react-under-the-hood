@@ -11,6 +11,7 @@ class Component {
       ...this.state,
       ...partialState
     };
+    // eslint-disable-next-line
     updateInstance(this.__internalInstance);
   }
 }

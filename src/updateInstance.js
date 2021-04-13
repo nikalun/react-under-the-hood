@@ -1,9 +1,10 @@
 import reconcile from "./reconcicle";
 
 const updateInstance = internalInstance => {
-  console.log(internalInstance)
+  // eslint-disable-next-line
+  console.log(internalInstance);
   const parentDom = internalInstance.dom.parentNode;
-  const element = internalInstance.element;
+  const { element } = internalInstance;
   reconcile(parentDom, internalInstance, element);
 };
 
